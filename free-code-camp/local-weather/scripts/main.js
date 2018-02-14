@@ -144,9 +144,6 @@ function error(err) {
   console.log(err);
 };
 
-/* Implementing the weather icons*/
-<script src="https://gist.github.com/CodeMyUI/1f39e9189b03632309af.js"></script>
-
 /* The code below will get executed once the page has fully loaded */
 $(document).ready(function() {
 
