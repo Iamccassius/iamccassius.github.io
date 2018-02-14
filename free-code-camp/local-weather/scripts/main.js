@@ -148,5 +148,6 @@ function error(err) {
 $(document).ready(function() {
 
   navigator.geolocation.getCurrentPosition(success, error);
+  console.log("test");
 
 });
