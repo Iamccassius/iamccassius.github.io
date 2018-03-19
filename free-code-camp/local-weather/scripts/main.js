@@ -6,10 +6,12 @@ function success(pos) {
   let longitude = location.longitude;
 
   /*The Openweathermap API is called with a getJSON request using the coordinates from the geolocation */
-  $.getJSON(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&APPID=a823ad7bba736b25bf0604de42c11ee5`, function (response) {
+  fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&APPID=a823ad7bba736b25bf0604de42c11ee5`).then(function(response2) {
+    return response2.json();
+  }).then(function(response) {
 
     /* City and Country Name from API Information is passed into HTML */
-    document.getElementById("city").innerHTML = `${response.name}, ${response.sys.country}`;
+    document.querySelector("#city").textContent = `${response.name}, ${response.sys.country}`;
 
     /* Changes the weather icon depending on API weather ID */
     let weatherId = response.weather[0].icon;
@@ -70,7 +72,7 @@ function success(pos) {
         break;
 
       default:
-        document.getElementById("weather-icon").setAttribute = "wi wi-refresh";
+        document.getElementById("weather-icon").setAttribute("class", "wi wi-refresh");
     }
 
     /* Temperature in Kelvin from API is converted to Celsius and rounded to one decimal point */
@@ -97,12 +99,35 @@ function success(pos) {
     let sunsetHours = sunset.getUTCHours() + timeZoneSunset;
     let sunsetMinutes = sunset.getUTCMinutes();
 
-    if (timeZoneSunrise >= 0) {
-      document.getElementById("sunrise").innerHTML = `sunrise: ${sunriseHours}:${sunriseMinutes} UTC+${timeZoneSunrise}`;
-      document.getElementById("sunset").innerHTML = `sunset: ${sunsetHours}:${sunsetMinutes} UTC+${timeZoneSunset}`;
+
+/* Checks if the timeZone difference from UTC0 is positive or negative to show the UTC difference as plus or minus accordingly.
+Also checks if the minutes until sunrise/sunset only has one digit and adds zero when this is the case to show it as double digit.*/
+
+    if (timeZoneSunrise >= 0 ) {
+
+      if (sunsetMinutes < 10) {
+        document.getElementById("sunset").innerHTML = `sunset: ${sunsetHours}:0${sunsetMinutes} UTC+${timeZoneSunset}`;
+      } else {
+        document.getElementById("sunset").innerHTML = `sunset: ${sunsetHours}:${sunsetMinutes} UTC+${timeZoneSunset}`;
+    }
+      if (sunriseMinutes < 10) {
+        document.getElementById("sunrise").innerHTML = `sunrise: ${sunriseHours}:0${sunriseMinutes} UTC+${timeZoneSunrise}`;
+      } else {
+        document.getElementById("sunrise").innerHTML = `sunrise: ${sunriseHours}:${sunriseMinutes} UTC+${timeZoneSunrise}`;
+    }
+
     } else {
-      document.getElementById("sunrise").innerHTML = `sunrise: ${sunriseHours}:${sunriseMinutes} UTC${timeZoneSunrise}`;
-      document.getElementById("sunset").innerHTML = `sunset: ${sunsetHours}:${sunsetMinutes} UTC${timeZoneSunset}`;
+
+        if (sunsetMinutes < 10) {
+          document.getElementById("sunset").innerHTML = `sunset: ${sunsetHours}:0${sunsetMinutes} UTC${timeZoneSunset}`;
+        } else {
+          document.getElementById("sunset").innerHTML = `sunset: ${sunsetHours}:${sunsetMinutes} UTC${timeZoneSunset}`;
+        }
+        if (sunriseMinutes < 10) {
+          document.getElementById("sunrise").innerHTML = `sunrise: ${sunriseHours}:0${sunriseMinutes} UTC${timeZoneSunrise}`;
+        } else {
+          document.getElementById("sunrise").innerHTML = `sunrise: ${sunriseHours}:${sunriseMinutes} UTC${timeZoneSunrise}`;
+      }
     }
 
     /* Module to change the temperature unit from Celsius to Fahrenheit */
@@ -134,7 +159,7 @@ function success(pos) {
     /* Adds an event listener to the temperature unit. When clicked it changes between Fahrenheit and Celsius. */
     document.getElementById("temp-unit").addEventListener("click", changeTempUnit);
 
-  }); // closes the getJSON request
+  }); // closes the fetch request
 
 }; // closes the success function
 
@@ -148,6 +173,5 @@ function error(err) {
 $(document).ready(function() {
 
   navigator.geolocation.getCurrentPosition(success, error);
-  console.log("test");
 
 });
