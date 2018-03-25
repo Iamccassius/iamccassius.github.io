@@ -194,7 +194,6 @@ function success(pos) {
         if(!(lastVisit)) {
           console.log('Data from today has been stored in the database, since you never visited before.');
           addData(response);
-          alert("It's your first visit. Welcome!")
         } else {
 
           let lastVisitDate = timeFromUnix(lastVisit.sunrise);
