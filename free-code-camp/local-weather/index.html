@@ -65,13 +65,45 @@
 
         <!-- information about sunrise and sunset -->
         <div class="row justify-content-center mt-5 mb-5">
-          <div class="col-12 col-sm-6 col-xl-5 sun-info d-flex justify-content-center">
+          <div class="col-12 col-sm-6 col-xl-5 sun-info d-flex align-items-center justify-content-center">
             <i class="wi wi-sunrise"></i>
             <p id="sunrise">sunrise: --:--</p>
           </div>
-          <div class="col-12 col-sm-6 col-xl-5 sun-info d-flex justify-content-center mt-xs">
+          <div class="col-12 col-sm-6 col-xl-5 sun-info d-flex align-items-center justify-content-center mt-xs">
             <i class="wi wi-sunset"></i>
             <p id="sunset">sunset: --:--</p>
+          </div>
+        </div>
+
+        <!-- Button that appears when information about last visit is available. When clicked it opens the next div -->
+        <div class="row justify-content-center mb-4" id='divBtnIdb'>
+          <div class="col-4 d-flex justify-content-center">
+            <button class="btn" id='btnIdb'>Last Visits</button>
+          </div>
+        </div>
+
+        <!-- This div is shown when the button is clicked. It shows data from the last visit stored in the IDB -->
+        <div id='divContentIdb'>
+          <div class="row justify-content-center mb-4">
+            <div class="col-2 d-flex justify-content-start align-items-center">
+              <button class="btn" id="lastIdb">Previous</button>
+            </div>
+            <div class='col-8 d-flex justify-content-center'>
+              <p>You visited on <span id='dateIdb'></span> from <span id='cityIdb'></span>.</p>
+            </div>
+            <div class="col-2 d-flex justify-content-end align-items-center">
+              <button class="btn" id='nextIdb'>Next</button>
+            </div>
+          </div>
+          <div class="row justify-content-center mb-3">
+            <div class="col-12 col-sm-6 col-xl-5 sun-info d-flex align-items-center justify-content-center">
+              <i class="wi wi-sunrise"></i>
+              <p id="sunriseIdb">sunrise: --:--</p>
+            </div>
+            <div class="col-12 col-sm-6 col-xl-5 sun-info d-flex align-items-center justify-content-center mt-xs">
+              <i class="wi wi-sunset"></i>
+              <p id="sunsetIdb">sunset: --:--</p>
+            </div>
           </div>
         </div>
 
