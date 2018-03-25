@@ -194,6 +194,7 @@ function success(pos) {
         if(!(lastVisit)) {
           console.log('Data from today has been stored in the database, since you never visited before.');
           addData(response);
+          alert("It's your first visit. Welcome!")
         } else {
 
           let lastVisitDate = timeFromUnix(lastVisit.sunrise);
@@ -283,24 +284,19 @@ function displayData(i) {
     lastVisitBtnDiv.style.display = 'flex';
     currCount = i;
 
-    // Two buttons to toggle between the different database items, if there are any
-      if (currCount > 1) {
-        lastBtn.style.display = 'flex';
-        lastBtn.addEventListener('click', function() {
-          displayData(currCount - 1);
-        });
-      } else {
-        lastBtn.style.display = 'none';
-      }
 
-      if (currCount < count) {
-        nextBtn.style.display = 'flex';
-        nextBtn.addEventListener('click', function() {
-          displayData(currCount + 1);
-        });
-      } else {
-        nextBtn.style.display = 'none';
-      }
+    // Two buttons to toggle between the different database items, if there are any
+    if (currCount > 1) {
+      lastBtn.style.display = 'flex';
+    } else {
+      lastBtn.style.display = 'none';
+    }
+
+    if (currCount < count) {
+      nextBtn.style.display = 'flex';
+    } else {
+      nextBtn.style.display = 'none';
+    }
   };
 };
 
@@ -324,8 +320,6 @@ function timeFromUnix(unix) {
     dateObject.timezoneOffset = '-' + (-1 * (myDate.getTimezoneOffset() / 60));
   }
 
-
-  console.log(dateObject);
   return dateObject;
 };
 
@@ -345,8 +339,6 @@ $(document).ready(function() {
     // Store the database in the db variable
     db = request.result;
 
-    // Run the displayData function to display the data of the last visit
-    //displayData();
   };
 
   // Setup the database it this has not been done yet
@@ -372,6 +364,13 @@ $(document).ready(function() {
       databaseContentDiv.style.display = 'none';
     }
     console.log('Button is pressed');
+  });
+
+  lastBtn.addEventListener('click', function() {
+    displayData(currCount - 1);
+  });
+  nextBtn.addEventListener('click',  function() {
+    displayData(currCount + 1);
   });
 
   navigator.geolocation.getCurrentPosition(success, error);
